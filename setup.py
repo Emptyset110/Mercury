@@ -15,7 +15,7 @@ except:
 def read(fname):
     return codecs.open(os.path.join(os.path.dirname(__file__), fname)).read()
 
-NAME = "mercury"
+NAME = "mercury-client"
 """
 名字，一般放你包的名字即可
 """
@@ -52,7 +52,7 @@ setup(
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
-        'Intended Audience :: ',
+        'Intended Audience :: Developers',
         'Operating System :: OS Independent'
     ],
     install_requires=[
