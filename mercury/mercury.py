@@ -67,6 +67,9 @@ class MercuryApp(metaclass=Singleton):
     def subscribe(self, channel):
         self.__pubsub.subscribe(channel)
 
+    def psubscribe(self, pattern):
+        self.__pubsub.psubscribe(pattern)
+
     def on_message(self, msg):
         print("on_message:", msg)
 
@@ -88,12 +91,12 @@ class MercuryApp(metaclass=Singleton):
     def __next__(self):
         msg = self.__pubsub.get_message(timeout=5)
         if msg is not None:
-            if msg['type'] == 'message':
+            if msg['type'] == 'message' or msg['type'] == 'pmessage':
                 data = None
                 try:
                     data = pickle.loads(msg['data'])
                 except TypeError:
-                    logger.error("Unexpected Message Type Received: {}, a pickle".format(msg['data']))
+                    logger.error("Unexpected Message Type Received: {}, a pickled bytes is required".format(msg['data']))
 
                 if data:
                     if msg["channel"] in self.__handlers:
